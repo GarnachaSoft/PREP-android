@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PREPciudadano</string>
+    <string name="login">Entrar</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="hello">:)</string>
+    <string name="upload_photo">Subir Foto</string>
+    <string name="pre_photo_subtitle">Considera esto antes de subir una fotografía</string>
+    <string name="pre_photo_list_1">- Tener buena luz</string>
+    <string name="pre_photo_list_2">- Que se pueda leer el texto</string>
+    <string name="pre_photo_list_3">- No mover la cámara</string>
+</resources>
