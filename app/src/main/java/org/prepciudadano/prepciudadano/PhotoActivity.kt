@@ -110,27 +110,6 @@ class PhotoActivity : AppCompatActivity() {
     }
 
     private fun uploadFile(){
-        /*
-        if( filePath != null ){
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Subiendo...")
-            progressDialog.show()
-
-            val imageRef = storageReference!!.child("images/"+UUID.randomUUID().toString())
-            imageRef.putFile(filePath!!)
-                    .addOnSuccessListener {
-                        progressDialog.dismiss()
-                        Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener{exception ->
-                        progressDialog.dismiss()
-                        //Toast.makeText(this, "Hubo un fallo al subir la imagen", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
-                    }.addOnProgressListener {taskSnapshot ->
-                        val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
-                        progressDialog.setMessage("Subiendo "+progress.toInt()+"%...")
-                    }
-        }*/
         if( bitmap != null ){
             val progressDialog = ProgressDialog(this)
             progressDialog.setTitle("Subiendo...")
