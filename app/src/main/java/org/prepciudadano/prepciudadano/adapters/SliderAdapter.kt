@@ -7,9 +7,7 @@ import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import org.prepciudadano.prepciudadano.HomeActivity
 import org.prepciudadano.prepciudadano.LoginActivity
 import org.prepciudadano.prepciudadano.R
@@ -33,6 +31,8 @@ class SliderAdapter: PagerAdapter{
         val image:ImageView
         val button:Button
         val textView:TextView
+        val dismiss:LinearLayout
+
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var view: View = inflater.inflate(R.layout.slider_image_item, container, false)
 
@@ -41,26 +41,27 @@ class SliderAdapter: PagerAdapter{
         image.setBackgroundResource(images[position])
         button = view.findViewById(R.id.slider_button)
         textView = view.findViewById(R.id.slider_text)
+        dismiss = view.findViewById(R.id.dismiss_slider)
+
+        button.visibility = View.INVISIBLE
+        dismiss.visibility = View.INVISIBLE
 
         when( position ){
             0 ->{
-                button.visibility = View.INVISIBLE
                 textView.text = "Este es un texto demo de la posicion 1"
             }
             1 ->{
-                button.visibility = View.INVISIBLE
                 textView.text = "Este es un texto demo de la posicion 2"
             }
             2 ->{
-                button.visibility = View.INVISIBLE
                 textView.text = "Este es un texto demo de la posicion 3"
             }
             3 ->{
-                button.visibility = View.INVISIBLE
                 textView.text = "Este es un texto demo de la posicion 4"
             }
             4 ->{
                 button.visibility = View.VISIBLE
+                dismiss.visibility = View.VISIBLE
                 textView.text = "Este es un texto demo de la posicion 5"
             }
         }
