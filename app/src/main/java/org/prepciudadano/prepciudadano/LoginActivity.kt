@@ -8,6 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
+import org.prepciudadano.prepciudadano.utils.Config
 import org.prepciudadano.prepciudadano.utils.GoogleAuth
 
 
@@ -20,6 +21,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val config: Config = Config(this)
+        if( config.get("loggedIn", "") != "" ){
+            val intent = Intent(this, PrePhotoActivity::class.java)
+            startActivity(intent)
+        }
 
         gAuth = GoogleAuth(this)
 

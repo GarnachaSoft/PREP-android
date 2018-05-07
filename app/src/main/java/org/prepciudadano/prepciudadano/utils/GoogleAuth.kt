@@ -9,7 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import org.prepciudadano.prepciudadano.MainActivity
 import org.prepciudadano.prepciudadano.PrePhotoActivity
 import org.prepciudadano.prepciudadano.R
 
@@ -17,8 +16,7 @@ class GoogleAuth(var activity: AppCompatActivity){
 
     val mAuth = FirebaseAuth.getInstance()
     val RC_SIGN_IN: Int = 1
-
-    init { }
+    val config: Config = Config(activity)
 
     fun doLogin(mGSO:GoogleSignInClient){
         val intent: Intent = mGSO.signInIntent
@@ -33,6 +31,7 @@ class GoogleAuth(var activity: AppCompatActivity){
                 firebaseAuthWithGoogle(account!!)
                 val intent = Intent(activity, PrePhotoActivity::class.java)
                 activity.startActivity(intent)
+                config.set("loggedIn", "true")
             }else{
 
             }
