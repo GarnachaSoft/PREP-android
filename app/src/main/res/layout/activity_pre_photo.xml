@@ -76,18 +76,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pre_photo_list_2" />
 
+    <EditText
+        android:id="@+id/section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:hint="Sección"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pre_photo_list_3" />
+
     <Button
         android:id="@+id/camera_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/round_button"
-        android:gravity="center|top"
-        android:textColor="#fff"
         android:drawableStart="@drawable/ic_photo_camera_white_24dp"
+        android:gravity="center|top"
         android:paddingLeft="18dp"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pre_photo_list_3" />
+        app:layout_constraintTop_toBottomOf="@+id/section" />
 
 </android.support.constraint.ConstraintLayout>

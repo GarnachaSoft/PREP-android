@@ -32,7 +32,7 @@ class PhotoActivity : AppCompatActivity() {
     //firebase upload file
     lateinit var filePath: Uri
     lateinit var imageUri:Uri
-    lateinit var bitmap:Bitmap
+    var bitmap:Bitmap? = null
 
     internal var storage:FirebaseStorage?=null
     internal var storageReference:StorageReference?=null
@@ -117,7 +117,7 @@ class PhotoActivity : AppCompatActivity() {
 
             //convert bitmap to bytearray
             val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val image = stream.toByteArray()
 
             val imageRef = storageReference!!.child("images/"+UUID.randomUUID().toString())
