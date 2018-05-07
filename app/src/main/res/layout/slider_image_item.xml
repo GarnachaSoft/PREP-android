@@ -66,6 +66,7 @@
             android:text="No volver a mostrar" />
 
         <CheckBox
+            android:id="@+id/not_show_slider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

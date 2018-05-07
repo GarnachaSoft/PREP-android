@@ -2,6 +2,7 @@ package org.prepciudadano.prepciudadano.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.support.constraint.ConstraintLayout
 import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
@@ -9,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import org.prepciudadano.prepciudadano.HomeActivity
-import org.prepciudadano.prepciudadano.LoginActivity
 import org.prepciudadano.prepciudadano.R
+import org.prepciudadano.prepciudadano.utils.Config
 
 class SliderAdapter: PagerAdapter{
 
@@ -32,6 +33,8 @@ class SliderAdapter: PagerAdapter{
         val button:Button
         val textView:TextView
         val dismiss:LinearLayout
+        val checkBox:CheckBox
+        val config = Config(context)
 
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var view: View = inflater.inflate(R.layout.slider_image_item, container, false)
@@ -42,6 +45,7 @@ class SliderAdapter: PagerAdapter{
         button = view.findViewById(R.id.slider_button)
         textView = view.findViewById(R.id.slider_text)
         dismiss = view.findViewById(R.id.dismiss_slider)
+        checkBox = view.findViewById(R.id.not_show_slider)
 
         button.visibility = View.INVISIBLE
         dismiss.visibility = View.INVISIBLE
@@ -67,6 +71,9 @@ class SliderAdapter: PagerAdapter{
         }
         button.setOnClickListener {
             val intent = Intent(context, HomeActivity::class.java)
+            if (checkBox.isChecked){
+                config.set("hide_slide", "true")
+            }
             context.startActivity(intent)
         }
 

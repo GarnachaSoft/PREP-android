@@ -6,8 +6,8 @@ import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import org.prepciudadano.prepciudadano.adapters.SliderAdapter
+import org.prepciudadano.prepciudadano.utils.Config
 
 class PresentationActivity : AppCompatActivity() {
 
@@ -42,13 +42,9 @@ class PresentationActivity : AppCompatActivity() {
         dots[0].setImageResource(R.drawable.active_dot)
 
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-            override fun onPageScrollStateChanged(state: Int) {
+            override fun onPageScrollStateChanged(state: Int) {}
 
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
                 for(dot in dots){
@@ -58,5 +54,6 @@ class PresentationActivity : AppCompatActivity() {
                 dots[position].setImageResource(R.drawable.active_dot)
             }
         })
+
     }
 }
