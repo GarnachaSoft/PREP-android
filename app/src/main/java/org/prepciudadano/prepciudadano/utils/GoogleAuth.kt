@@ -31,6 +31,7 @@ class GoogleAuth(var activity: AppCompatActivity){
                 firebaseAuthWithGoogle(account!!)
                 val intent = Intent(activity, PrePhotoActivity::class.java)
                 activity.startActivity(intent)
+                activity.finish()
                 config.set("loggedIn", "true")
             }else{
 

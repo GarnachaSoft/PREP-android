@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -53,6 +54,12 @@ class PhotoActivity : AppCompatActivity() {
         //firebase init
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
+
+        //intents data
+        val stateId = intent.getIntExtra("state_id", 0)
+        val section = intent.getStringExtra("section")
+
+        Toast.makeText(this, "Estado - ${stateId}, Sección - ${section}", Toast.LENGTH_SHORT).show()
     }
 
     fun launchChooser(){
@@ -64,7 +71,7 @@ class PhotoActivity : AppCompatActivity() {
 
     fun launchCamera(){
         try {
-            val imageFile = createimageFile()
+            val imageFile = createImageFile()
             val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
             if( callCameraIntent.resolveActivity(packageManager) != null ){
@@ -122,9 +129,10 @@ class PhotoActivity : AppCompatActivity() {
 
             val imageRef = storageReference!!.child("images/"+UUID.randomUUID().toString())
             imageRef.putBytes(image)
-                    .addOnSuccessListener {
+                    .addOnSuccessListener {taskSnapshot ->
                         progressDialog.dismiss()
-                        Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, taskSnapshot.downloadUrl.toString(), Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener{exception ->
                         progressDialog.dismiss()
@@ -138,7 +146,7 @@ class PhotoActivity : AppCompatActivity() {
     }
 
     @Throws(IOException::class)
-    fun createimageFile(): File {
+    private fun createImageFile(): File {
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val imageFileName = "JPEG_" + timestamp + "_"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -153,9 +161,6 @@ class PhotoActivity : AppCompatActivity() {
     }
 
     fun setScaledBitmap(): Bitmap{
-        val imageViewWidth = photoView.width
-        val imageViewHeight = photoView.height
-
         val bmOptions = BitmapFactory.Options()
         bmOptions.inJustDecodeBounds = true
         BitmapFactory.decodeFile(imageFilePath, bmOptions)

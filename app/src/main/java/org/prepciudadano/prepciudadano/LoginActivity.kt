@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
         if( config.get("loggedIn", "") != "" ){
             val intent = Intent(this, PrePhotoActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         gAuth = GoogleAuth(this)

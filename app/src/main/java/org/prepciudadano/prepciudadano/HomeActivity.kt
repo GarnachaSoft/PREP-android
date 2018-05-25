@@ -33,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
 
         val adapter = CardAdapter(cards)
 
+        recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
     }
 }
