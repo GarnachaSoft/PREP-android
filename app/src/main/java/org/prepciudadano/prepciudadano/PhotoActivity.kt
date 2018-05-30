@@ -15,12 +15,15 @@ import android.support.v4.content.FileProvider
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_pre_photo.*
+import org.prepciudadano.prepciudadano.firebase.Template
 import java.io.ByteArrayOutputStream
 
 class PhotoActivity : AppCompatActivity() {
@@ -29,6 +32,7 @@ class PhotoActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 1234
     lateinit var imageFilePath: String
     lateinit var photoView:ImageView
+    var section = ""
 
     //firebase upload file
     lateinit var filePath: Uri
@@ -57,7 +61,7 @@ class PhotoActivity : AppCompatActivity() {
 
         //intents data
         val stateId = intent.getIntExtra("state_id", 0)
-        val section = intent.getStringExtra("section")
+        section = intent.getStringExtra("section")
 
         Toast.makeText(this, "Estado - ${stateId}, Sección - ${section}", Toast.LENGTH_SHORT).show()
     }
@@ -80,7 +84,8 @@ class PhotoActivity : AppCompatActivity() {
 
                 callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
-                Toast.makeText(this, imageUri.toString(), Toast.LENGTH_LONG).show()
+
+                Toast.makeText(this, "Archivo creado en ${imageUri}", Toast.LENGTH_SHORT).show()
             }
         }catch (e:Exception){
             Toast.makeText(this, "No fue posible crear el archivo", Toast.LENGTH_SHORT).show()
@@ -99,7 +104,7 @@ class PhotoActivity : AppCompatActivity() {
                 }
             }
             PICK_IMAGE_REQUEST -> {
-                if( resultCode == Activity.RESULT_OK && data != null && data?.data != null){
+                if( resultCode == Activity.RESULT_OK && data != null && data.data != null){
                     filePath = data.data
                     bitmap = setScaledBitmap()
                     try {
@@ -127,12 +132,16 @@ class PhotoActivity : AppCompatActivity() {
             bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val image = stream.toByteArray()
 
-            val imageRef = storageReference!!.child("images/"+UUID.randomUUID().toString())
+            val uid = UUID.randomUUID().toString()
+            val imageRef = storageReference!!.child("images/${uid}")
             imageRef.putBytes(image)
                     .addOnSuccessListener {taskSnapshot ->
                         progressDialog.dismiss()
-                        Toast.makeText(this, taskSnapshot.downloadUrl.toString(), Toast.LENGTH_SHORT).show()
-                        //Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show()
+                        savePhotoFirebase(section.toString(), uid)
+
+                        //val intent = Intent(this, FormResultsActivity::class.java)
+                        //intent.putExtra("url", taskSnapshot.downloadUrl.toString())
+                        //startActivity(intent)
                     }
                     .addOnFailureListener{exception ->
                         progressDialog.dismiss()
@@ -162,17 +171,23 @@ class PhotoActivity : AppCompatActivity() {
 
     fun setScaledBitmap(): Bitmap{
         val bmOptions = BitmapFactory.Options()
-        bmOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(imageFilePath, bmOptions)
-        val bitmapWidth = bmOptions.outWidth
-        val bitmapHeight = bmOptions.outHeight
 
-        //Toast.makeText(this, "Altura:${bitmapHeight.toString()}, Ancho: ${bitmapWidth.toString()} = Altura:${imageViewHeight.toString()}, Ancho: ${imageViewWidth.toString()}", Toast.LENGTH_SHORT).show()
-        //val scaleFactor = Math.min(bitmapWidth/imageViewWidth, bitmapHeight/imageViewHeight)
+        val bitmapHeight = bmOptions.outHeight
         val scaleFactor = bitmapHeight/800
+
         bmOptions.inSampleSize = scaleFactor
         bmOptions.inJustDecodeBounds = false
 
         return BitmapFactory.decodeFile(imageFilePath, bmOptions)
+    }
+
+    fun savePhotoFirebase(boxId:String, urlImage:String){
+        val ref = FirebaseDatabase.getInstance().getReference("templates")
+        val templateId:String = ref.push().key!!
+
+        val template = Template(templateId, boxId, urlImage)
+        ref.child(templateId).setValue(template).addOnCompleteListener {
+            Toast.makeText(this, "foto salvada correctamente", Toast.LENGTH_SHORT).show()
+        }
     }
 }

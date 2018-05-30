@@ -2,6 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.2.41'
+    //ext.enableCrashlytics = false
     repositories {
         google()
         jcenter()

@@ -45,7 +45,7 @@ class GoogleAuth(var activity: AppCompatActivity){
         mAuth!!.signInWithCredential(credential).addOnCompleteListener {task ->
             if(task.isSuccessful){
                 //Sign in success
-                val user = mAuth!!.currentUser
+                val user = mAuth.currentUser
                 //Toast.makeText(this, user.toString(), Toast.LENGTH_LONG).show()
                 updateUI(user)
             }else{

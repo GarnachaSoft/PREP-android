@@ -46,7 +46,7 @@ class PrePhotoActivity : AppCompatActivity() {
         cameraBtn.setOnClickListener {
             val section = sectionEt.text.toString()
             if( section.isEmpty() ){
-                sectionEt.error = "Por favor coloca una seccion"
+                sectionEt.error = "Por favor coloca una sección"
             }else{
                 val sectionLength = section.toString()
                 if( sectionLength.length != 4 ){
@@ -73,9 +73,9 @@ class PrePhotoActivity : AppCompatActivity() {
 
     private fun initLocationRequest(){
         locationRequest = LocationRequest()
-        locationRequest?.interval = 10000
-        locationRequest?.fastestInterval = 5000
-        locationRequest?.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
     private fun checkPermsLocation():Boolean{
