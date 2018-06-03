@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.2.41'
-    //ext.enableCrashlytics = false
+    ext.enableCrashlytics = false
     repositories {
         google()
         jcenter()
@@ -27,6 +27,9 @@ allprojects {
         jcenter()
         maven {
             url 'https://maven.google.com/'
+        }
+        maven{
+            url 'https://jitpack.io'
         }
     }
 }

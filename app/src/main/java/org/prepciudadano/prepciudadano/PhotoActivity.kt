@@ -33,6 +33,7 @@ class PhotoActivity : AppCompatActivity() {
     lateinit var imageFilePath: String
     lateinit var photoView:ImageView
     var section = ""
+    var stateId = ""
 
     //firebase upload file
     lateinit var filePath: Uri
@@ -60,7 +61,7 @@ class PhotoActivity : AppCompatActivity() {
         storageReference = storage!!.reference
 
         //intents data
-        val stateId = intent.getIntExtra("state_id", 0)
+        stateId = intent.getStringExtra("state_id")
         section = intent.getStringExtra("section")
 
         Toast.makeText(this, "Estado - ${stateId}, Sección - ${section}", Toast.LENGTH_SHORT).show()
@@ -137,11 +138,7 @@ class PhotoActivity : AppCompatActivity() {
             imageRef.putBytes(image)
                     .addOnSuccessListener {taskSnapshot ->
                         progressDialog.dismiss()
-                        savePhotoFirebase(section.toString(), uid)
-
-                        //val intent = Intent(this, FormResultsActivity::class.java)
-                        //intent.putExtra("url", taskSnapshot.downloadUrl.toString())
-                        //startActivity(intent)
+                        savePhotoFirebase("${stateId}/${section.toString()}", uid)
                     }
                     .addOnFailureListener{exception ->
                         progressDialog.dismiss()
@@ -187,7 +184,12 @@ class PhotoActivity : AppCompatActivity() {
 
         val template = Template(templateId, boxId, urlImage)
         ref.child(templateId).setValue(template).addOnCompleteListener {
-            Toast.makeText(this, "foto salvada correctamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, FormResultsActivity::class.java)
+            intent.putExtra("id", templateId)
+            intent.putExtra("box_id", boxId)
+            startActivity(intent)
+            finish()
+            Toast.makeText(this, "Imagen guardada en sistema", Toast.LENGTH_SHORT).show()
         }
     }
 }

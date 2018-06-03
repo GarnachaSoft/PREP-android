@@ -30,7 +30,7 @@ class PrePhotoActivity : AppCompatActivity() {
     lateinit var state:TextView
     lateinit var cameraBtn:Button
     lateinit var sectionEt:EditText
-    var stateId:Int = 0
+    var stateId:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class PrePhotoActivity : AppCompatActivity() {
                 if( sectionLength.length != 4 ){
                     sectionEt.error = "La sección debe contener exactamente 4 números"
                 }else{
-                    val intent: Intent = Intent(this, PhotoActivity::class.java)
+                    val intent: Intent = Intent(this, NewPhotoActivity::class.java)
                     intent.putExtra("section", section)
                     intent.putExtra("state_id", stateId)
                     startActivity(intent)
@@ -148,11 +148,11 @@ class PrePhotoActivity : AppCompatActivity() {
         fLPClient.requestLocationUpdates(locationRequest, callback, null)
     }
 
-    private fun getStateId(stateName:String):Int{
+    private fun getStateId(stateName:String):String{
         return when(stateName){
-            "Ciudad de México" -> 1
-            "San Luis Potosí" -> 2
-            else -> 0
+            "Ciudad de México" -> "01"
+            "San Luis Potosí" -> "02"
+            else -> "0"
         }
     }
 
