@@ -43,7 +43,7 @@
         <activity
             android:name=".PhotoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".FormResultsActivity"></activity>
+        <activity android:name=".FormResultsActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -55,7 +55,8 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".NewPhotoActivity"></activity>
+        <activity android:name=".NewPhotoActivity" />
+        <activity android:name=".FindBoxActivity"></activity>
     </application>
 
 </manifest>
