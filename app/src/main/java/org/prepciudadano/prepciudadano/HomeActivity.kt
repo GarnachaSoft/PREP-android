@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         cards.add(Card("Sobre nosotros", "Quieres saber quienes somos", R.drawable.garnacha, mainIntent, this))
         cards.add(Card("Gastos", "¿Cuánto cuesta este PREP ciudadano?", R.drawable.money, mainIntent, this))
         cards.add(Card("Donativos", "Gracias por tu apoyo", R.drawable.donate, mainIntent, this))
-        cards.add(Card("Presentación", "Ver presentacion inicial", R.drawable.donate, sliderIntent, this))
+        cards.add(Card("Presentación", "Ver presentacion inicial", R.drawable.slider, sliderIntent, this))
 
         val adapter = CardAdapter(cards)
 
