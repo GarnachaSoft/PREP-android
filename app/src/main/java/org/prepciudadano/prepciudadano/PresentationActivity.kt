@@ -11,7 +11,14 @@ import org.prepciudadano.prepciudadano.utils.Config
 
 class PresentationActivity : AppCompatActivity() {
 
-    var images:Array<Int> = arrayOf(R.drawable.cat, R.drawable.bird, R.drawable.chicken, R.drawable.trunk, R.drawable.monkey)
+    var images:Array<Int> = arrayOf(
+            R.drawable.prep,
+            R.drawable.warning,
+            R.drawable.find,
+            R.drawable.camera,
+            R.drawable.prep
+    )
+
     var adapter: PagerAdapter = SliderAdapter(this, images)
     var dotscount:Int = 0
     var dots = mutableListOf<ImageView>()

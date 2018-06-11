@@ -49,10 +49,9 @@ class FormResultsActivity : AppCompatActivity() {
         sendData.setOnClickListener {
             if(validateDataEmpty(mc, morena, pan, panal, pes, prd, pri, pt, pvem)) {
                 setVotes(mc, morena, pan, panal, pes, prd, pri, pt, pvem)
-                /*
-                val intent = Intent(this, PrePhotoActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
-                 */
+                finish()
             }
         }
     }
@@ -118,15 +117,15 @@ class FormResultsActivity : AppCompatActivity() {
         val ptVotes = pt.text.toString().trim()
         val pvemVotes = pvem.text.toString().trim()
 
-        dbTemplate.child(templateId).child("mc").setValue(mcVotes)
-        dbTemplate.child(templateId).child("morena").setValue(morenaVotes)
-        dbTemplate.child(templateId).child("pan").setValue(panVotes)
-        dbTemplate.child(templateId).child("panal").setValue(panalVotes)
-        dbTemplate.child(templateId).child("pes").setValue(pesVotes)
-        dbTemplate.child(templateId).child("prd").setValue(prdVotes)
-        dbTemplate.child(templateId).child("pri").setValue(priVotes)
-        dbTemplate.child(templateId).child("pt").setValue(ptVotes)
-        dbTemplate.child(templateId).child("pvem").setValue(pvemVotes)
+        dbTemplate.child(templateId).child("mc").setValue(mcVotes.toInt())
+        dbTemplate.child(templateId).child("morena").setValue(morenaVotes.toInt())
+        dbTemplate.child(templateId).child("pan").setValue(panVotes.toInt())
+        dbTemplate.child(templateId).child("panal").setValue(panalVotes.toInt())
+        dbTemplate.child(templateId).child("pes").setValue(pesVotes.toInt())
+        dbTemplate.child(templateId).child("prd").setValue(prdVotes.toInt())
+        dbTemplate.child(templateId).child("pri").setValue(priVotes.toInt())
+        dbTemplate.child(templateId).child("pt").setValue(ptVotes.toInt())
+        dbTemplate.child(templateId).child("pvem").setValue(pvemVotes.toInt())
 
         Toast.makeText(this@FormResultsActivity, "Información añadida con éxito, Gracias", Toast.LENGTH_LONG).show()
     }

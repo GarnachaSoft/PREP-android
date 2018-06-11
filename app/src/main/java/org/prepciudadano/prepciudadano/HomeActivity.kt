@@ -23,13 +23,13 @@ class HomeActivity : AppCompatActivity() {
         val mainIntent = Intent(this, MainActivity::class.java)
         val loginIntent = Intent(this, LoginActivity::class.java)
 
-        cards.add(Card("PREP", "Consulta los resultados en tiempo real", R.drawable.cat, mainIntent, this))
-        cards.add(Card("Encuentra tu casilla", "Consulta los resultados en tiempo real", R.drawable.bird, mainIntent, this))
-        cards.add(Card("Colaborar", "Consulta los resultados en tiempo real", R.drawable.chicken, loginIntent, this))
-        cards.add(Card("Incidencias", "Consulta los resultados en tiempo real", R.drawable.monkey, mainIntent, this))
-        cards.add(Card("Sobre nosotros", "Consulta los resultados en tiempo real", R.drawable.trunk, mainIntent, this))
-        cards.add(Card("Gastos", "Consulta los resultados en tiempo real", R.drawable.cat, mainIntent, this))
-        cards.add(Card("Donativos", "Consulta los resultados en tiempo real", R.drawable.bird, mainIntent, this))
+        cards.add(Card("PREP", "Consulta los resultados en tiempo real", R.drawable.prep, mainIntent, this))
+        cards.add(Card("Encuentra tu casilla", "Consulta donde debes ir a votar", R.drawable.find, mainIntent, this))
+        cards.add(Card("Colaborar", "Envíanos los resultados de las votaciones presidenciales", R.drawable.camera, loginIntent, this))
+        cards.add(Card("Incidencias", "Envíanos informacion de irregularidades", R.drawable.warning, mainIntent, this))
+        cards.add(Card("Sobre nosotros", "Quieres saber quienes somos", R.drawable.garnacha, mainIntent, this))
+        cards.add(Card("Gastos", "¿Cuánto cuesta este PREP ciudadano?", R.drawable.money, mainIntent, this))
+        cards.add(Card("Donativos", "Gracias por tu apoyo", R.drawable.donate, mainIntent, this))
 
         val adapter = CardAdapter(cards)
 

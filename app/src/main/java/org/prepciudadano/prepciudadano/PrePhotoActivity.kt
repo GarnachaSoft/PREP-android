@@ -1,6 +1,7 @@
 package org.prepciudadano.prepciudadano
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -30,11 +31,20 @@ class PrePhotoActivity : AppCompatActivity() {
     lateinit var state:TextView
     lateinit var cameraBtn:Button
     lateinit var sectionEt:EditText
+    lateinit var progressDialog: ProgressDialog
     var stateId:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pre_photo)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Detectando Ubicación...")
+        progressDialog.show()
 
         fLPClient = FusedLocationProviderClient(this)
         initLocationRequest()
@@ -59,10 +69,6 @@ class PrePhotoActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         if( checkPermsLocation() ){
             getLocation()
@@ -150,13 +156,44 @@ class PrePhotoActivity : AppCompatActivity() {
 
     private fun getStateId(stateName:String):String{
         return when(stateName){
-            "Ciudad de México" -> "01"
-            "San Luis Potosí" -> "02"
+            "Aguascalientes" -> "01"
+            "Baja California" -> "02"
+            "Baja California Sur" -> "03"
+            "Campeche" -> "04"
+            "Chiapas" -> "05"
+            "Chihuahua" -> "06"
+            "Ciudad de México" -> "07"
+            "Coahuila de Zaragoza" -> "08"
+            "Colima" -> "09"
+            "Durango" -> "10"
+            "Guanajuato" -> "11"
+            "Guerrero" -> "12"
+            "Hidalgo" -> "13"
+            "Jalisco" -> "14"
+            "Estado de Mexico" -> "15"
+            "Michoacán de Ocampo" -> "16"
+            "Morelos" -> "17"
+            "Nayarit" -> "18"
+            "Nuevo León" -> "19"
+            "Oaxaca" -> "20"
+            "Puebla" -> "21"
+            "Querétaro" -> "22"
+            "Quintana Roo" -> "23"
+            "San Luis Potosí" -> "24"
+            "Sinaloa" -> "25"
+            "Sonora" -> "26"
+            "Tabasco" -> "27"
+            "Tamaulipas" -> "28"
+            "Tlaxcala" -> "29"
+            "Veracruz" -> "30"
+            "Yucatán" -> "31"
+            "Zacatecas" -> "32"
             else -> "0"
         }
     }
 
     private fun stopLocation(){
+        progressDialog.dismiss()
         fLPClient.removeLocationUpdates(callback)
     }
 }

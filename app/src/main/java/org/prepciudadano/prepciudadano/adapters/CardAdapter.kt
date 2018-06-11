@@ -1,5 +1,6 @@
 package org.prepciudadano.prepciudadano.adapters
 
+import android.app.ProgressDialog
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -37,6 +38,7 @@ class CardAdapter(var list:ArrayList<Card>): RecyclerView.Adapter<CardAdapter.Vi
             thumbnail.setImageResource(data.thumbnail)
 
             itemView.setOnClickListener {
+
                 itemView.context.startActivity(data.intent)
             }
         }

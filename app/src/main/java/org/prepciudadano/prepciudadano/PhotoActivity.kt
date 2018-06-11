@@ -142,7 +142,6 @@ class PhotoActivity : AppCompatActivity() {
                     }
                     .addOnFailureListener{exception ->
                         progressDialog.dismiss()
-                        //Toast.makeText(this, "Hubo un fallo al subir la imagen", Toast.LENGTH_SHORT).show()
                         Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
                     }.addOnProgressListener {taskSnapshot ->
                         val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
@@ -182,7 +181,7 @@ class PhotoActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("templates")
         val templateId:String = ref.push().key!!
 
-        val template = Template(templateId, boxId, urlImage)
+        val template = Template(templateId, boxId, urlImage, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         ref.child(templateId).setValue(template).addOnCompleteListener {
             val intent = Intent(this, FormResultsActivity::class.java)
             intent.putExtra("id", templateId)
