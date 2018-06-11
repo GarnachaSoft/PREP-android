@@ -13,10 +13,10 @@ class PresentationActivity : AppCompatActivity() {
 
     var images:Array<Int> = arrayOf(
             R.drawable.prep,
-            R.drawable.warning,
-            R.drawable.find,
             R.drawable.camera,
-            R.drawable.prep
+            R.drawable.filldata,
+            R.drawable.approve,
+            R.drawable.report
     )
 
     var adapter: PagerAdapter = SliderAdapter(this, images)

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.support.constraint.ConstraintLayout
 import android.support.v4.view.PagerAdapter
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,21 +53,21 @@ class SliderAdapter: PagerAdapter{
 
         when( position ){
             0 ->{
-                textView.text = "Este es un texto demo de la posicion 1"
+                textView.text = "Consulta los resultados en tiempo real"
             }
             1 ->{
-                textView.text = "Este es un texto demo de la posicion 2"
+                textView.text = "Colabora subiendo las sábanas de resultados presidenciales que puedas"
             }
             2 ->{
-                textView.text = "Este es un texto demo de la posicion 3"
+                textView.text = "Llena los datos de la sábana presidencial en la applicacion PREP Ciudadano"
             }
             3 ->{
-                textView.text = "Este es un texto demo de la posicion 4"
+                textView.setText(Html.fromHtml("Califica las fotos de otros usuarios como válidas o inválidas desde la web <a href=\"http://prepciudadano.org\">prepciudadano.org</a>"))
             }
             4 ->{
                 button.visibility = View.VISIBLE
                 dismiss.visibility = View.VISIBLE
-                textView.text = "Este es un texto demo de la posicion 5"
+                textView.text = "Reporta las fotos mal calificadas desde el portal web"
             }
         }
         button.setOnClickListener {

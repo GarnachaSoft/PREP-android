@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
 
         val mainIntent = Intent(this, MainActivity::class.java)
         val loginIntent = Intent(this, LoginActivity::class.java)
+        val sliderIntent = Intent(this, PresentationActivity::class.java)
 
         cards.add(Card("PREP", "Consulta los resultados en tiempo real", R.drawable.prep, mainIntent, this))
         cards.add(Card("Encuentra tu casilla", "Consulta donde debes ir a votar", R.drawable.find, mainIntent, this))
@@ -30,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
         cards.add(Card("Sobre nosotros", "Quieres saber quienes somos", R.drawable.garnacha, mainIntent, this))
         cards.add(Card("Gastos", "¿Cuánto cuesta este PREP ciudadano?", R.drawable.money, mainIntent, this))
         cards.add(Card("Donativos", "Gracias por tu apoyo", R.drawable.donate, mainIntent, this))
+        cards.add(Card("Presentación", "Ver presentacion inicial", R.drawable.donate, sliderIntent, this))
 
         val adapter = CardAdapter(cards)
 
