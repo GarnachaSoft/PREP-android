@@ -5,8 +5,6 @@ class Template(
         val boxId: String,
         val image: String,
         val status:Int,
-        val likes:Int,
-        val unlikes:Int,
         val morena:Int,
         val pan: Int,
         val pri: Int,
@@ -18,5 +16,5 @@ class Template(
         val pes: Int
     ){
 
-    constructor():this("", "", "", 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0)
+    constructor():this("", "", "", 0, 0, 0, 0, 0, 0,0,0,0,0)
 }

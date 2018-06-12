@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import org.prepciudadano.prepciudadano.HomeActivity
+import org.prepciudadano.prepciudadano.MainActivity
 import org.prepciudadano.prepciudadano.R
 import org.prepciudadano.prepciudadano.utils.Config
 
@@ -71,7 +72,7 @@ class SliderAdapter: PagerAdapter{
             }
         }
         button.setOnClickListener {
-            val intent = Intent(context, HomeActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             if (checkBox.isChecked){
                 config.set("hide_slide", "true")
             }

@@ -1,5 +1,6 @@
 package org.prepciudadano.prepciudadano
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,10 @@ import android.graphics.Typeface
 import android.text.style.StyleSpan
 import android.text.style.RelativeSizeSpan
 import android.text.SpannableString
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import android.support.v7.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,11 +38,20 @@ class MainActivity : AppCompatActivity() {
 
         chart = findViewById(R.id.piechart)
 
+        val toolbar:Toolbar = findViewById(R.id.include)
+        setSupportActionBar(toolbar)
+
         val entries = ArrayList<PieEntry>()
+        val colaborate:Button = findViewById(R.id.colaborate)
+
+        colaborate.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         ref = FirebaseDatabase.getInstance().getReference("templates")
 
-        ref.orderByChild("status").equalTo(1.0).addValueEventListener(object: ValueEventListener{
+        ref.orderByChild("status").equalTo(2.0).addValueEventListener(object: ValueEventListener{
             override fun onDataChange(ds: DataSnapshot) {
                 if(ds.exists()){
                     var morena = 0f; var pan = 0f; var panal = 0f; var prd = 0f; var pri = 0f; var pvem = 0f; var pes = 0f; var pt = 0f; var mc = 0f
@@ -131,6 +145,21 @@ class MainActivity : AppCompatActivity() {
         s.setSpan(RelativeSizeSpan(1.5f), s.length - 14, s.length, 0)
         s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
         return s
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.action_1 -> {
+                Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun logout(){

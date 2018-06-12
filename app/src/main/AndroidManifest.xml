@@ -40,11 +40,6 @@
         <activity
             android:name=".PrePhotoActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".PhotoActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".FormResultsActivity" />
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -58,7 +53,8 @@
         <activity android:name=".NewPhotoActivity" />
         <activity android:name=".FindBoxActivity" />
         <activity android:name=".AboutUsActivity" />
-        <activity android:name=".DonationsActivity"></activity>
+        <activity android:name=".DonationsActivity" />
+        <activity android:name=".IncidencesActivity"></activity>
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
         val config: Config = Config(this)
         val hide = config.get("hide_slide", "")
         if( hide != "" ){
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }else{

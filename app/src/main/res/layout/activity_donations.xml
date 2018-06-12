@@ -15,15 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <WebView
-                android:id="@+id/paypal"
-                android:layout_width="match_parent"
-                android:layout_height="520dp">
-            </WebView>
-
             <TextView
                 android:padding="20dp"
                 android:text="@string/donations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/donate"
+                android:text="DONAR PAYPAL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
