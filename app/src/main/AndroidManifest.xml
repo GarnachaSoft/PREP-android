@@ -56,7 +56,8 @@
         </provider>
 
         <activity android:name=".NewPhotoActivity" />
-        <activity android:name=".FindBoxActivity"></activity>
+        <activity android:name=".FindBoxActivity" />
+        <activity android:name=".AboutUsActivity"></activity>
     </application>
 
 </manifest>

@@ -9,4 +9,10 @@
     <string name="pre_photo_list_1">- Tener buena luz</string>
     <string name="pre_photo_list_2">- Que se pueda leer el texto</string>
     <string name="pre_photo_list_3">- No mover la cámara</string>
+    <string name="about_us"><![CDATA[
+        Somos un pequeño grupo de programadores que están interesados en brindar a la ciudadanía, herramientas, recursos y medios para participar
+        de manera más profunda en las decisiones de nuestro país.\n\n
+        Nuestro objetivo es crecer el nombre de nuestra marca GarnachaSoft dedicada a innovar en el terreno de las aplicaciones de todo tipo, pero sobre todo
+        de las aplicaciones que faciliten el acceso a la información pública
+    ]]></string>
 </resources>
