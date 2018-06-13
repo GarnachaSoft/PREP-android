@@ -1,7 +1,6 @@
 package org.prepciudadano.prepciudadano.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 
 class Config(val context: Context){
     private val SHARED_PREFS_FILE = "PREPrefers"

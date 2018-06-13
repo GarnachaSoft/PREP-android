@@ -24,6 +24,7 @@
 
     <Button
         android:id="@+id/buttonPhoto"
+        android:textSize="11dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,12 +38,26 @@
 
     <Button
         android:id="@+id/uploadImage"
+        android:textSize="11dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
         android:text="Enviar Imágen"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_photo" />
+
+    <Button
+        android:id="@+id/rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11dp"
+        android:text="Rotar"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/uploadImage"
+        app:layout_constraintStart_toEndOf="@+id/buttonPhoto"
         app:layout_constraintTop_toBottomOf="@+id/imgv_photo" />
 
 </android.support.constraint.ConstraintLayout>

@@ -46,7 +46,7 @@ class GoogleAuth(var activity: AppCompatActivity){
             if(task.isSuccessful){
                 //Sign in success
                 val user = mAuth.currentUser
-                //Toast.makeText(this, user.toString(), Toast.LENGTH_LONG).show()
+                //Toast.makeText(activity, user.toString(), Toast.LENGTH_LONG).show()
                 updateUI(user)
             }else{
                 updateUI(null)
@@ -60,6 +60,7 @@ class GoogleAuth(var activity: AppCompatActivity){
         if (user != null) {
             tvStatus.text = "Google User email: " + user.email!!
             tvDetail.text = "Firebase User ID: " + user.uid
+            config.set("userId", user.uid)
         } else {
             tvStatus.text = "Signed Out"
             tvDetail.text = null

@@ -2,7 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/donations"
+        app:showAsAction="ifRoom"
+        android:title="donations"
+        android:icon="@drawable/ic_money" />
+    <item
         android:id="@+id/action_1"
         app:showAsAction="ifRoom"
-        android:title="@string/hello"/>
+        android:title="@string/about_us"
+        android:icon="@drawable/ic_help"/>
 </menu>

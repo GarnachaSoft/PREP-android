@@ -40,6 +40,24 @@
         <activity
             android:name=".PrePhotoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewPhotoActivity" />
+        <activity
+            android:name=".FormResultsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FindBoxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DonationsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".IncidencesActivity"
+            android:screenOrientation="portrait"></activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -49,12 +67,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
-        <activity android:name=".NewPhotoActivity" />
-        <activity android:name=".FindBoxActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity android:name=".DonationsActivity" />
-        <activity android:name=".IncidencesActivity"></activity>
     </application>
 
 </manifest>

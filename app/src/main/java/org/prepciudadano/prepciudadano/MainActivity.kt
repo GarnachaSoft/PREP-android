@@ -13,16 +13,18 @@ import com.github.mikephil.charting.data.PieEntry
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import org.prepciudadano.prepciudadano.firebase.Template
-import com.github.mikephil.charting.utils.ColorTemplate
 import android.text.style.ForegroundColorSpan
 import android.graphics.Typeface
+import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.text.style.StyleSpan
 import android.text.style.RelativeSizeSpan
 import android.text.SpannableString
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import android.support.v7.widget.Toolbar
+import org.prepciudadano.prepciudadano.utils.Config
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,13 +32,17 @@ class MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     lateinit var ref: DatabaseReference
     lateinit var chart:PieChart
+    lateinit var drawer:DrawerLayout
+    lateinit var mToggle: ActionBarDrawerToggle
+    lateinit var nv: NavigationView
     val div = 100000f
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         chart = findViewById(R.id.piechart)
+        nv = findViewById(R.id.nv)
 
         val toolbar:Toolbar = findViewById(R.id.include)
         setSupportActionBar(toolbar)
@@ -48,6 +54,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        setupNavigationView()
+
+        drawer = findViewById(R.id.drawer)
+        mToggle = ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close)
+        drawer.addDrawerListener(mToggle)
+        mToggle.syncState()
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         ref = FirebaseDatabase.getInstance().getReference("templates")
 
@@ -98,21 +112,28 @@ class MainActivity : AppCompatActivity() {
         dataSet.valueLinePart1OffsetPercentage = 80f
         dataSet.valueLinePart1Length = 0.4f
         dataSet.valueLinePart2Length = 0.2f
+        dataSet.valueLineColor = Color.WHITE
+        dataSet.valueLineWidth = 2f
         dataSet.valueTextColor = Color.WHITE
         dataSet.valueTextSize = 15f
 
         val data = PieData(dataSet)
+
         chart.description.text = ""
         chart.setCenterTextSize(10f)
-        chart.setEntryLabelColor(Color.BLACK)
+        chart.setEntryLabelColor(Color.WHITE)
         chart.setExtraOffsets(25f, 10f, 25f, 10f)
         chart.setRotationAngle(10f)
+        chart.setDrawHoleEnabled(true);
+        chart.setHoleColor(Color.argb(255, 46, 52, 54));
+        chart.setTransparentCircleColor(Color.argb(255, 46, 52, 54));
 
         //legends
         val l = chart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.VERTICAL
+        l.textColor = Color.WHITE
         l.setDrawInside(false)
 
         dataSet.colors = setColorsChart()
@@ -140,10 +161,11 @@ class MainActivity : AppCompatActivity() {
     private fun spanable():SpannableString{
         val s = SpannableString("PREP Ciudadano\nGarnacha Soft")
         s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
+        s.setSpan(ForegroundColorSpan(Color.WHITE), 0, 14, 0)
         s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 12, 0)
         s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
         s.setSpan(RelativeSizeSpan(1.5f), s.length - 14, s.length, 0)
-        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
+        s.setSpan(ForegroundColorSpan(Color.WHITE), s.length - 14, s.length, 0)
         return s
     }
 
@@ -154,12 +176,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if( mToggle.onOptionsItemSelected(item) ){
+            return true
+        }
+
         when(item?.itemId){
             R.id.action_1 -> {
-                Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, PresentationActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupNavigationView(){
+        nv.setNavigationItemSelectedListener {
+            val intent = when(it.itemId){
+                R.id.nav_incidences -> {
+                    Intent(this, IncidencesActivity::class.java)
+                }
+                R.id.nav_about_us -> {
+                    Intent(this, AboutUsActivity::class.java)
+                }
+                R.id.nav_donations -> {
+                    Intent(this, DonationsActivity::class.java)
+                }
+                else -> null
+            }
+
+            drawer.closeDrawers()
+
+            startActivity(intent)
+
+            true
+        }
     }
 
     private fun logout(){

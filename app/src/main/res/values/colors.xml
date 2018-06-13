@@ -11,4 +11,6 @@
     <color name="divider">#BDBDBD</color>
     <color name="gray_light">#EEEEEE</color>
     <color name="gray_text">#AAAAAA</color>
+    <color name="blue_paypal">#169BD7</color>
+    <color name="dark_background">#2e3436</color>
 </resources>

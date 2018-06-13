@@ -11,6 +11,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
@@ -21,6 +22,7 @@ import android.widget.Toast
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.common.ResizeOptions
+import com.facebook.imagepipeline.common.RotationOptions
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -32,19 +34,24 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_new_photo.*
 import org.prepciudadano.prepciudadano.firebase.Template
+import org.prepciudadano.prepciudadano.utils.Config
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class NewPhotoActivity : AppCompatActivity() {
 
     val context = this
     val atx = this
+    lateinit var config: Config
+    var rotation = 0
 
     lateinit var mainContainer:ConstraintLayout
     lateinit var takePhotoButon:Button
     lateinit var uploadPhoto:Button
+    lateinit var rotateImage:Button
     lateinit var picture:SimpleDraweeView
+    lateinit var photoPath:String
+    lateinit var uri: Uri
 
     private val REQUEST_CODE_PHOTO_IMAGE = 1787
     private var mCurrentPhotoPath: String = ""
@@ -58,6 +65,9 @@ class NewPhotoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        config = Config(this)
+
         Fresco.initialize(this);
         setContentView(R.layout.activity_new_photo)
 
@@ -65,6 +75,7 @@ class NewPhotoActivity : AppCompatActivity() {
         takePhotoButon = findViewById(R.id.buttonPhoto)
         uploadPhoto = findViewById(R.id.uploadImage)
         picture = findViewById(R.id.imgv_photo)
+        rotateImage = findViewById(R.id.rotate)
 
         //firebase init
         storage = FirebaseStorage.getInstance()
@@ -73,6 +84,14 @@ class NewPhotoActivity : AppCompatActivity() {
         //intents data
         stateId = intent.getStringExtra("state_id")
         section = intent.getStringExtra("section")
+
+        rotateImage.setOnClickListener {
+            if( ::file.isInitialized ){
+                rotate()
+            }else{
+                Toast.makeText(this, "Debes tomar la foto primero", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         takePhotoButon.setOnClickListener {
             validatePermissions()
@@ -148,11 +167,11 @@ class NewPhotoActivity : AppCompatActivity() {
         val cursor = contentResolver.query(urip, array,null, null, null)
 
         cursor.moveToFirst()
-        val photoPath = cursor.getString(0)
+        photoPath = cursor.getString(0)
         cursor.close()
 
         file = File(photoPath)
-        val uri = Uri.fromFile(file)
+        uri = Uri.fromFile(file)
 
         val height = resources.getDimensionPixelSize(R.dimen.photo_height)
         val width = resources.getDimensionPixelSize(R.dimen.photo_width)
@@ -169,37 +188,57 @@ class NewPhotoActivity : AppCompatActivity() {
         imgv_photo.controller = controller
     }
 
+    private fun rotate(){
+        rotation += 90
+        val request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setRotationOptions(RotationOptions.forceRotation(rotation))
+                .build()
+
+        val controller = Fresco.newDraweeControllerBuilder()
+                .setOldController(imgv_photo.controller)
+                .setImageRequest(request)
+                .build()
+
+        imgv_photo.controller = controller
+    }
+
     private fun uploadFile(){
         val progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Subiendo...")
         progressDialog.show()
 
         //
-        val scaled = scaleBitmap(file)
-        val image = FileInputStream(scaled)
+        if( ::file.isInitialized ){
+            val scaled = scaleBitmap(file, rotation)
+            val image = FileInputStream(scaled)
 
-        val uid = UUID.randomUUID().toString()
-        val imageRef = storageReference!!.child("images/${uid}")
-        imageRef.putStream(image)
-                .addOnSuccessListener {taskSnapshot ->
-                    progressDialog.dismiss()
-                    Toast.makeText(this, "imagen subida fácil y rápido", Toast.LENGTH_SHORT).show()
-                    savePhotoFirebase("${stateId}/${section}", uid)
-                }
-                .addOnFailureListener{exception ->
-                    progressDialog.dismiss()
-                    Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
-                }.addOnProgressListener {taskSnapshot ->
-                    val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
-                    progressDialog.setMessage("Subiendo "+progress.toInt()+"%...")
-                }
+            val uid = UUID.randomUUID().toString()
+            val imageRef = storageReference!!.child("images/${uid}")
+            imageRef.putStream(image)
+                    .addOnSuccessListener {taskSnapshot ->
+                        progressDialog.dismiss()
+                        Toast.makeText(this, "imagen subida fácil y rápido", Toast.LENGTH_SHORT).show()
+                        savePhotoFirebase("${stateId}/${section}", uid)
+                    }
+                    .addOnFailureListener{exception ->
+                        progressDialog.dismiss()
+                        Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
+                    }.addOnProgressListener {taskSnapshot ->
+                        val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
+                        //progressDialog.setMessage("Subiendo "+progress.toInt()+"%...")
+                        progressDialog.setMessage("Subiendo Imagen...")
+                    }
+        }else{
+            Toast.makeText(this, "Debes tomar la foto primero", Toast.LENGTH_SHORT).show()
+            progressDialog.dismiss()
+        }
     }
 
     fun savePhotoFirebase(boxId:String, urlImage:String){
         val ref = FirebaseDatabase.getInstance().getReference("templates")
         val templateId:String = ref.push().key!!
 
-        val template = Template(templateId, boxId, urlImage, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        val template = Template(templateId, boxId, urlImage, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, config.get("userId", ""))
         ref.child(templateId).setValue(template).addOnCompleteListener {
             val intent = Intent(this, FormResultsActivity::class.java)
             intent.putExtra("id", templateId)
@@ -210,8 +249,8 @@ class NewPhotoActivity : AppCompatActivity() {
         }
     }
 
-    fun scaleBitmap(file:File):File{
-        val b = BitmapFactory.decodeFile(file.absolutePath)
+    fun scaleBitmap(file:File, rotation:Int):File{
+        var b = BitmapFactory.decodeFile(file.absolutePath)
 
         val reqHeight = 800
         val currentHeight = b.height
@@ -219,11 +258,15 @@ class NewPhotoActivity : AppCompatActivity() {
         val scale = currentHeight/reqHeight
         val reqWidth = currentWidth/scale
 
-        Toast.makeText(this, "width: ${reqWidth} - height: ${reqHeight}", Toast.LENGTH_LONG).show()
+        b = Bitmap.createScaledBitmap(b, reqWidth, reqHeight, false)
+        if( rotation > 0 ) {
+            val matrix = Matrix()
+            matrix.postRotate(rotation.toFloat())
+            b = Bitmap.createBitmap(b, 0, 0, b.width, b.height, matrix, true);
+        }
 
-        val b2 = Bitmap.createScaledBitmap(b, reqWidth, reqHeight, false)
         val stream = ByteArrayOutputStream()
-        b2.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        b.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
         val file = File("${Environment.getExternalStorageDirectory()}${File.separator}test.jpg")
         file.createNewFile()

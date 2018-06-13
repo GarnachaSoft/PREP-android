@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import org.prepciudadano.prepciudadano.adapters.SliderAdapter
-import org.prepciudadano.prepciudadano.utils.Config
 
 class PresentationActivity : AppCompatActivity() {
 

@@ -2,7 +2,6 @@ package org.prepciudadano.prepciudadano.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.support.constraint.ConstraintLayout
 import android.support.v4.view.PagerAdapter
 import android.text.Html
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import org.prepciudadano.prepciudadano.HomeActivity
 import org.prepciudadano.prepciudadano.MainActivity
 import org.prepciudadano.prepciudadano.R
 import org.prepciudadano.prepciudadano.utils.Config

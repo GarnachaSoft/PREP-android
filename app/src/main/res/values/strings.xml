@@ -16,7 +16,10 @@
     ]]></string>
     <string name="donations"><![CDATA[
         Las donaciones, son una ayuda muy valiosa para nosotros ya que no contamos con recursos gubernamentales ni empresariales\nEl gasto total de servidores y
-        servicios será cubierto enteramente por 2 ciudadanos, por lo que agradecemos enormemente su apoyo a la cuenta personal de Paypal\nlas donaciones serán publicadas,
-        así como los gastos generados por el consumo de servicios, en caso de que las donaciones superen los gastos estos serán retornados a los donadores.
+        servicios será cubierto enteramente por 2 ciudadanos, por lo que agradecemos enormemente su apoyo a la cuenta personal de Paypal de uno de ellos.\nLas donaciones serán publicadas,
+        así como los gastos generados por el consumo de servicios, en caso de que las donaciones superen los gastos, estas serán retornadas a los donadores.
     ]]></string>
+
+    <string name="open">Abierto</string>
+    <string name="close">Cerrado</string>
 </resources>

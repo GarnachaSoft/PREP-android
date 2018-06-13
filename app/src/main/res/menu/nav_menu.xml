@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_incidences"
+        android:icon="@drawable/ic_warning"
+        android:title="Incidencias" />
+
+    <item
+        android:id="@+id/nav_about_us"
+        android:icon="@drawable/ic_face"
+        android:title="Sobre nosotros" />
+
+    <item
+        android:id="@+id/nav_donations"
+        android:icon="@drawable/ic_money"
+        android:title="Donaciones" />
+</menu>
