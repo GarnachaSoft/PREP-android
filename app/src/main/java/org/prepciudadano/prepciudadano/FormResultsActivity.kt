@@ -20,6 +20,8 @@ class FormResultsActivity : AppCompatActivity() {
     lateinit var pri:EditText
     lateinit var pt:EditText
     lateinit var pvem:EditText
+    lateinit var bronco:EditText
+    lateinit var nulos:EditText
 
     lateinit var sendData: Button
 
@@ -40,15 +42,20 @@ class FormResultsActivity : AppCompatActivity() {
         pri = findViewById(R.id.pri)
         pt = findViewById(R.id.pt)
         pvem = findViewById(R.id.pvem)
+        bronco = findViewById(R.id.bronco)
+        nulos = findViewById(R.id.nulled)
 
         sendData = findViewById(R.id.sendData)
 
-        templateId = intent.getStringExtra("id")
-        boxId = intent.getStringExtra("box_id")
+        //templateId = intent.getStringExtra("id")
+        //boxId = intent.getStringExtra("box_id")
+
+        templateId = "1"
+        boxId = "1"
 
         sendData.setOnClickListener {
-            if(validateDataEmpty(mc, morena, pan, panal, pes, prd, pri, pt, pvem)) {
-                setVotes(mc, morena, pan, panal, pes, prd, pri, pt, pvem)
+            if(validateDataEmpty(mc, morena, pan, panal, pes, prd, pri, pt, pvem, bronco)) {
+                setVotes(mc, morena, pan, panal, pes, prd, pri, pt, pvem, bronco, nulos)
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -56,7 +63,7 @@ class FormResultsActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateDataEmpty(mc:EditText, morena:EditText, pan:EditText, panal:EditText, pes:EditText, prd:EditText, pri:EditText, pt:EditText, pvem:EditText):Boolean{
+    private fun validateDataEmpty(mc:EditText, morena:EditText, pan:EditText, panal:EditText, pes:EditText, prd:EditText, pri:EditText, pt:EditText, pvem:EditText, bronco:EditText):Boolean{
         if( mc.text.isEmpty() ){
             mc.error = "Este campo no puede ir vacío"
             return false
@@ -102,10 +109,15 @@ class FormResultsActivity : AppCompatActivity() {
             return false
         }
 
+        if( bronco.text.isEmpty() ){
+            bronco.error = "Este campo no puede ir vacío"
+            return false
+        }
+
         return true
     }
 
-    private fun setVotes(mc:EditText, morena:EditText, pan:EditText, panal:EditText, pes:EditText, prd:EditText, pri:EditText, pt:EditText, pvem:EditText){
+    private fun setVotes(mc:EditText, morena:EditText, pan:EditText, panal:EditText, pes:EditText, prd:EditText, pri:EditText, pt:EditText, pvem:EditText, bronco: EditText, nulos:EditText){
         val dbTemplate = FirebaseDatabase.getInstance().getReference("templates")
         val mcVotes = mc.text.toString().trim()
         val morenaVotes = morena.text.toString().trim()
@@ -116,6 +128,12 @@ class FormResultsActivity : AppCompatActivity() {
         val priVotes = pri.text.toString().trim()
         val ptVotes = pt.text.toString().trim()
         val pvemVotes = pvem.text.toString().trim()
+        val broncoVotes = bronco.text.toString().trim()
+        var nuloVotes = "0"
+
+        if( !nulos.text.isEmpty() ){
+            nuloVotes = nulos.text.toString().trim()
+        }
 
         dbTemplate.child(templateId).child("mc").setValue(mcVotes.toInt())
         dbTemplate.child(templateId).child("morena").setValue(morenaVotes.toInt())
@@ -126,6 +144,8 @@ class FormResultsActivity : AppCompatActivity() {
         dbTemplate.child(templateId).child("pri").setValue(priVotes.toInt())
         dbTemplate.child(templateId).child("pt").setValue(ptVotes.toInt())
         dbTemplate.child(templateId).child("pvem").setValue(pvemVotes.toInt())
+        dbTemplate.child(templateId).child("bronco").setValue(broncoVotes.toInt())
+        dbTemplate.child(templateId).child("nulos").setValue(nuloVotes.toInt())
 
         Toast.makeText(this@FormResultsActivity, "Información añadida con éxito, Gracias", Toast.LENGTH_LONG).show()
     }

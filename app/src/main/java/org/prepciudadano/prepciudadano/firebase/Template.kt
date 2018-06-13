@@ -14,8 +14,10 @@ class Template(
         val pt: Int,
         val panal: Int,
         val pes: Int,
+        val bronco: Int,
+        val nulos: Int,
         val userId: String
     ){
 
-    constructor():this("", "", "", 0, 0, 0, 0, 0, 0,0,0,0,0, "")
+    constructor():this("", "", "", 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, "")
 }

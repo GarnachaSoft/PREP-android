@@ -238,7 +238,7 @@ class NewPhotoActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("templates")
         val templateId:String = ref.push().key!!
 
-        val template = Template(templateId, boxId, urlImage, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, config.get("userId", ""))
+        val template = Template(templateId, boxId, urlImage, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, config.get("userId", ""))
         ref.child(templateId).setValue(template).addOnCompleteListener {
             val intent = Intent(this, FormResultsActivity::class.java)
             intent.putExtra("id", templateId)
