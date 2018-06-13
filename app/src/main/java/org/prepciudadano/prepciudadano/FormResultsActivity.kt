@@ -47,11 +47,8 @@ class FormResultsActivity : AppCompatActivity() {
 
         sendData = findViewById(R.id.sendData)
 
-        //templateId = intent.getStringExtra("id")
-        //boxId = intent.getStringExtra("box_id")
-
-        templateId = "1"
-        boxId = "1"
+        templateId = intent.getStringExtra("id")
+        boxId = intent.getStringExtra("box_id")
 
         sendData.setOnClickListener {
             if(validateDataEmpty(mc, morena, pan, panal, pes, prd, pri, pt, pvem, bronco)) {
