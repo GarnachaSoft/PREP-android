@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawer:DrawerLayout
     lateinit var mToggle: ActionBarDrawerToggle
     lateinit var nv: NavigationView
-    val div = 100000f
+    val div = 1f
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         ref.orderByChild("status").equalTo(2.0).addValueEventListener(object: ValueEventListener{
             override fun onDataChange(ds: DataSnapshot) {
                 if(ds.exists()){
-                    var morena = 0f; var pan = 0f; var panal = 0f; var prd = 0f; var pri = 0f; var pvem = 0f; var pes = 0f; var pt = 0f; var mc = 0f
+                    var morena = 0f; var pan = 0f; var panal = 0f; var prd = 0f; var pri = 0f; var pvem = 0f; var pes = 0f; var pt = 0f; var mc = 0f; var bronco = 0f; var nulos = 0f
 
                     for ( i in ds.children ){
                         val template = i.getValue(Template::class.java)
@@ -81,6 +81,8 @@ class MainActivity : AppCompatActivity() {
                         pt += template!!.pt.toFloat()
                         panal += template!!.panal.toFloat()
                         pes += template!!.pes.toFloat()
+                        bronco += template!!.bronco.toFloat()
+                        nulos += template!!.nulos.toFloat()
                     }
 
                     val entries = ArrayList<PieEntry>()
@@ -94,6 +96,8 @@ class MainActivity : AppCompatActivity() {
                     entries.add( PieEntry(pt/div, "PT"))
                     entries.add( PieEntry(panal/div, "PANAL"))
                     entries.add( PieEntry(pes/div, "PES"))
+                    entries.add( PieEntry(bronco/div, "BRONCO"))
+                    entries.add( PieEntry(nulos/div, "NULOS"))
 
                     entriesChart(entries)
                 }
@@ -122,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         chart.description.text = ""
         chart.setCenterTextSize(10f)
         chart.setEntryLabelColor(Color.WHITE)
-        chart.setExtraOffsets(25f, 10f, 25f, 10f)
+        chart.setExtraOffsets(25f, 5f, 25f, 10f)
         chart.setRotationAngle(10f)
         chart.setDrawHoleEnabled(true);
         chart.setHoleColor(Color.argb(255, 46, 52, 54));
@@ -130,11 +134,12 @@ class MainActivity : AppCompatActivity() {
 
         //legends
         val l = chart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.isEnabled = false
+        /*l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.VERTICAL
         l.textColor = Color.WHITE
-        l.setDrawInside(false)
+        l.setDrawInside(false)*/
 
         dataSet.colors = setColorsChart()
 
@@ -154,6 +159,8 @@ class MainActivity : AppCompatActivity() {
         colors.add(Color.argb(200, 231, 4, 23))//pt
         colors.add(Color.argb(200, 0, 171, 179))//panal
         colors.add(Color.argb(200, 85, 37, 95))//pes
+        colors.add(Color.argb(200, 178, 178, 178))//bronco
+        colors.add(Color.argb(200, 255, 255, 255))//nulos
 
         return colors
     }
