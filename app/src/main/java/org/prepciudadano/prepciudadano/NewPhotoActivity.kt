@@ -98,6 +98,7 @@ class NewPhotoActivity : AppCompatActivity() {
         }
 
         uploadPhoto.setOnClickListener {
+            uploadPhoto.isEnabled = false
             uploadFile()
         }
     }
@@ -205,6 +206,7 @@ class NewPhotoActivity : AppCompatActivity() {
     private fun uploadFile(){
         val progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Subiendo...")
+        progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
 
         //
@@ -217,12 +219,14 @@ class NewPhotoActivity : AppCompatActivity() {
             imageRef.putStream(image)
                     .addOnSuccessListener {taskSnapshot ->
                         progressDialog.dismiss()
-                        Toast.makeText(this, "imagen subida fácil y rápido", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "imagen subida al servidor con éxito", Toast.LENGTH_SHORT).show()
                         savePhotoFirebase("${stateId}/${section}", uid)
+                        uploadPhoto.isEnabled = true
                     }
                     .addOnFailureListener{exception ->
                         progressDialog.dismiss()
                         Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
+                        uploadPhoto.isEnabled = true
                     }.addOnProgressListener {taskSnapshot ->
                         val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
                         //progressDialog.setMessage("Subiendo "+progress.toInt()+"%...")
@@ -230,6 +234,7 @@ class NewPhotoActivity : AppCompatActivity() {
                     }
         }else{
             Toast.makeText(this, "Debes tomar la foto primero", Toast.LENGTH_SHORT).show()
+            uploadPhoto.isEnabled = true
             progressDialog.dismiss()
         }
     }
