@@ -3,6 +3,7 @@ package org.prepciudadano.prepciudadano.utils
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,7 +35,7 @@ class GoogleAuth(var activity: AppCompatActivity){
                 activity.finish()
                 config.set("loggedIn", "true")
             }else{
-
+                Toast.makeText(activity, result.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
