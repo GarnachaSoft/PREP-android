@@ -67,4 +67,11 @@ class GoogleAuth(var activity: AppCompatActivity){
             tvDetail.text = null
         }
     }
+
+    fun logout(){
+        // sign out Firebase
+        mAuth!!.signOut()
+        // sign out Google
+        //Auth.GoogleSignInApi.signOut().setResultCallback {  }
+    }
 }

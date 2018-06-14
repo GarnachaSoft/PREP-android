@@ -28,13 +28,12 @@ import org.prepciudadano.prepciudadano.utils.Config
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var signOut: Button
-    private var mAuth: FirebaseAuth? = null
     lateinit var ref: DatabaseReference
     lateinit var chart:PieChart
     lateinit var drawer:DrawerLayout
     lateinit var mToggle: ActionBarDrawerToggle
     lateinit var nv: NavigationView
+
     val div = 1f
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar:Toolbar = findViewById(R.id.include)
         setSupportActionBar(toolbar)
 
-        val entries = ArrayList<PieEntry>()
         val colaborate:Button = findViewById(R.id.colaborate)
 
         colaborate.setOnClickListener {
@@ -209,6 +207,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_donations -> {
                     Intent(this, DonationsActivity::class.java)
                 }
+                R.id.nav_logout -> {
+                    Intent(this, LogoutActivity::class.java)
+                }
                 else -> null
             }
 
@@ -218,12 +219,5 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
-    }
-
-    private fun logout(){
-        // sign out Firebase
-        //mAuth!!.signOut()
-        // sign out Google
-        //Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback {  }
     }
 }
