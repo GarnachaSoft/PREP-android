@@ -2,8 +2,8 @@ package org.prepciudadano.prepciudadano.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.support.constraint.ConstraintLayout
-import android.support.v4.view.PagerAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.viewpager.widget.PagerAdapter
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import org.prepciudadano.prepciudadano.MainActivity
 import org.prepciudadano.prepciudadano.R
 import org.prepciudadano.prepciudadano.utils.Config
 
-class SliderAdapter: PagerAdapter{
+class SliderAdapter: PagerAdapter {
 
     var context:Context
     var images:Array<Int>

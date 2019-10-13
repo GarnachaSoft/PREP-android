@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/PREP-android.iml" filepath="$PROJECT_DIR$/PREP-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/PREP-android-app.iml" filepath="$PROJECT_DIR$/app/PREP-android-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/PREPciudadano.iml" filepath="$PROJECT_DIR$/PREPciudadano.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

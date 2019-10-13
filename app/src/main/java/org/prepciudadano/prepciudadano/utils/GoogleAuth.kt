@@ -1,7 +1,7 @@
 package org.prepciudadano.prepciudadano.utils
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
